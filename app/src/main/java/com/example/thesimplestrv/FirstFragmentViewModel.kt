@@ -24,9 +24,8 @@ class FirstFragmentViewModel : ViewModel() {
 
     fun updateData(pos: Int, newName: String) {
         val old = demoList[pos]
-        val new = DemoModel(old.id, old.name, old.visible)
-        new.name = newName
         demoList.removeAt(pos)
+        val new = old.copy(id = old.id, name = newName, visible = old.visible)
         demoList.add(pos, new)
         demoLiveData.postValue(demoList.toList())
     }
