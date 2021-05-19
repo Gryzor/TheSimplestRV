@@ -38,7 +38,7 @@ class FirstFragment : Fragment() {
         }
 
         binding.updateButton.setOnClickListener {
-            viewModel.updateData(viewModel.randomPosition(), "Updated at ${LocalTime.now()}) ")
+            viewModel.updateData(viewModel.randomPosition(), "Updated at ${LocalTime.now()} ")
         }
 
         viewModel.demoLiveData.observe(viewLifecycleOwner) { list ->
