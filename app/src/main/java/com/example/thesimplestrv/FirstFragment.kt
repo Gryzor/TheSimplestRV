@@ -34,11 +34,11 @@ class FirstFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         binding.deleteButton.setOnClickListener {
-            viewModel.deleteData(viewModel.randomPosition())
+            viewModel.deleteDataAtRandomPosition()
         }
 
         binding.updateButton.setOnClickListener {
-            viewModel.updateData(viewModel.randomPosition(), "Updated at ${LocalTime.now()} ")
+            viewModel.updateDataAtRandomPosition("Updated at ${LocalTime.now()} ")
         }
 
         viewModel.demoLiveData.observe(viewLifecycleOwner) { list ->

@@ -2,6 +2,7 @@ package com.example.thesimplestrv
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
 import kotlin.random.Random
 
 class FirstFragmentViewModel : ViewModel() {
@@ -18,11 +19,34 @@ class FirstFragmentViewModel : ViewModel() {
 
     var demoLiveData = MutableLiveData(demoList.toList())
 
-    fun randomPosition(): Int {
+    fun deleteDataAtRandomPosition() {
+        val randomPosition = randomPosition()
+
+        if (isPositionValid(randomPosition, demoList)) {
+            deleteData(pos = randomPosition)
+        }
+    }
+
+    fun updateDataAtRandomPosition(newName: String) {
+        val randomPosition = randomPosition()
+
+        if (isPositionValid(randomPosition, demoList)) {
+            updateData(pos = randomPosition, newName = newName)
+        }
+    }
+
+    private fun isPositionValid(pos: Int, list: List<DemoModel>): Boolean =
+        (list.size <= pos || pos == RecyclerView.NO_POSITION).not()
+
+    private fun randomPosition(): Int {
+        if (demoList.isEmpty()) {
+            return RecyclerView.NO_POSITION
+        }
+
         return Random.nextInt(demoList.size)
     }
 
-    fun updateData(pos: Int, newName: String) {
+    private fun updateData(pos: Int, newName: String) {
         val old = demoList[pos]
         demoList.removeAt(pos)
         val new = old.copy(id = old.id, name = newName, visible = old.visible)
@@ -30,7 +54,7 @@ class FirstFragmentViewModel : ViewModel() {
         demoLiveData.postValue(demoList.toList())
     }
 
-    fun deleteData(pos: Int) {
+    private fun deleteData(pos: Int) {
         demoList.removeAt(pos)
         demoLiveData.postValue(demoList.toList())
     }
