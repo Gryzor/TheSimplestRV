@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.thesimplestrv.databinding.FragmentFirstBinding
-import com.example.thesimplestrv.listeners.NestedThingClickListener
-import com.example.thesimplestrv.model.NestedThing
+import com.example.thesimplestrv.listeners.ThingClickListener
 import com.example.thesimplestrv.outer.StudentAdapter
 import java.time.LocalTime
 
@@ -18,10 +17,8 @@ class FirstFragment : Fragment() {
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
 
-    private val innerClickListener = object : NestedThingClickListener {
-        override fun onNestedThingClicked(parentId: Int, thing: NestedThing) {
-            viewModel.onNestedThingClicked(parentId, thing)
-        }
+    private val innerClickListener = ThingClickListener {
+        viewModel.onNestedThingClicked(it.parentId, it)
     }
 
     private val adapter = StudentAdapter(innerClickListener)
@@ -40,11 +37,11 @@ class FirstFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         binding.deleteButton.setOnClickListener {
-            viewModel.deleteData(viewModel.randomPosition())
+            viewModel.deleteDataAtRandomPosition()
         }
 
         binding.updateButton.setOnClickListener {
-            viewModel.updateData(viewModel.randomPosition(), "Updated at ${LocalTime.now()} ")
+            viewModel.updateDataAtRandomPosition("Updated at ${LocalTime.now()} ")
         }
 
         viewModel.studentsLiveData.observe(viewLifecycleOwner) { list ->

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.thesimplestrv.databinding.ListItemLayoutBinding
-import com.example.thesimplestrv.listeners.NestedThingClickListener
+import com.example.thesimplestrv.listeners.ThingClickListener
 import com.example.thesimplestrv.model.Student
 
-class StudentAdapter(private val innerClickListener: NestedThingClickListener) :
+class StudentAdapter(private val innerClickListener: ThingClickListener) :
     ListAdapter<Student, StudentViewHolder>(StudentDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
