@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.thesimplestrv.model.NestedThing
 import com.example.thesimplestrv.model.Student
 import com.example.thesimplestrv.repository.FakeStudentRepository
+import androidx.recyclerview.widget.RecyclerView
 import kotlin.random.Random
 
 class FirstFragmentViewModel : ViewModel() {
@@ -14,11 +15,34 @@ class FirstFragmentViewModel : ViewModel() {
     private var _studentsLiveData = MutableLiveData(studentList.toList())
     var studentsLiveData: LiveData<List<Student>> = _studentsLiveData
 
-    fun randomPosition(): Int {
+    fun deleteDataAtRandomPosition() {
+        val randomPosition = randomPosition()
+
+        if (isPositionValid(randomPosition, studentList)) {
+            deleteData(pos = randomPosition)
+        }
+    }
+
+    fun updateDataAtRandomPosition(newName: String) {
+        val randomPosition = randomPosition()
+
+        if (isPositionValid(randomPosition, studentList)) {
+            updateData(pos = randomPosition, newName = newName)
+        }
+    }
+
+    private fun isPositionValid(pos: Int, list: List<Student>): Boolean =
+        (list.size <= pos || pos == RecyclerView.NO_POSITION).not()
+
+    private fun randomPosition(): Int {
+        if (studentList.isEmpty()) {
+            return RecyclerView.NO_POSITION
+        }
+
         return Random.nextInt(studentList.size)
     }
 
-    fun updateData(pos: Int, newName: String) {
+    private fun updateData(pos: Int, newName: String) {
         val old = studentList[pos]
         studentList.removeAt(pos)
         val new = old.copy(id = old.id, name = newName)
@@ -26,7 +50,7 @@ class FirstFragmentViewModel : ViewModel() {
         _studentsLiveData.postValue(studentList.toList())
     }
 
-    fun deleteData(pos: Int) {
+    private fun deleteData(pos: Int) {
         studentList.removeAt(pos)
         _studentsLiveData.postValue(studentList.toList())
     }
