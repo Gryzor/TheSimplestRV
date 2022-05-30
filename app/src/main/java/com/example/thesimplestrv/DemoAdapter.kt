@@ -36,7 +36,10 @@ class DemoAdapter : ListAdapter<DemoModel, DemoAdapter.DemoViewHolder>(DiffCallb
 
         fun bind(student: DemoModel) {
             binding.apply {
-                itemName.text = student.name + " " + student.visible
+                itemName.text = binding.itemName.resources.getString(R.string.item_name_template,
+                    student.name,
+                    student.visible)
+
                 if (student.visible) {
                     itemName.visibility = View.VISIBLE
                 } else {
