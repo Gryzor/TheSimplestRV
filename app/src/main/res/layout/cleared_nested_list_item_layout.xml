@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constrainedWidth="true"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="@android:color/holo_blue_light"
+        android:background="@android:color/holo_blue_light"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textStyle="bold"
         android:textColor="@android:color/white"
