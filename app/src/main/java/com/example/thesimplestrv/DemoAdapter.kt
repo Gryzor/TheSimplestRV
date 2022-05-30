@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thesimplestrv.databinding.ListItemLayoutBinding
-
-data class DemoModel(val id: Int, var name: String, val visible: Boolean = true)
+import com.example.thesimplestrv.model.DemoModel
+import com.example.thesimplestrv.nested.NestedAdapter
 
 class DiffCallback : DiffUtil.ItemCallback<DemoModel>() {
     override fun areItemsTheSame(oldItem: DemoModel, newItem: DemoModel) = oldItem.id == newItem.id
@@ -34,6 +35,14 @@ class DemoAdapter : ListAdapter<DemoModel, DemoAdapter.DemoViewHolder>(DiffCallb
     inner class DemoViewHolder(private val binding: ListItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private val innerAdapter = NestedAdapter()
+
+        init {
+            binding.itemNestedList.layoutManager =
+                LinearLayoutManager(binding.itemNestedList.context, LinearLayoutManager.HORIZONTAL, false)
+            binding.itemNestedList.adapter = innerAdapter
+        }
+
         fun bind(student: DemoModel) {
             binding.apply {
                 itemName.text = binding.itemName.resources.getString(R.string.item_name_template,
@@ -45,6 +54,8 @@ class DemoAdapter : ListAdapter<DemoModel, DemoAdapter.DemoViewHolder>(DiffCallb
                 } else {
                     itemName.visibility = View.INVISIBLE
                 }
+
+                innerAdapter.submitList(student.nestedThings)
             }
         }
     }
