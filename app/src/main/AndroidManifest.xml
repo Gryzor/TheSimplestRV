@@ -11,8 +11,8 @@
         android:theme="@style/Theme.TheSimplestRV">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.TheSimplestRV.NoActionBar">
+            android:theme="@style/Theme.TheSimplestRV.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
